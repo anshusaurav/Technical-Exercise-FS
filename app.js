@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: "false" }));
 
-app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "build/index.html")));
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
