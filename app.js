@@ -5,12 +5,24 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const apiRouter = require('./routes/api')
 const app = express();
-const config = require("./config/config");
-
+// const config = require("./config/config");
+const mongoose = require('mongoose');
 app.use(cors());
 
-config.connectDB();
-
+// config.connectDB();
+const uri = "mongodb+srv://anshusaurav:abcd1234@cluster0.eawse.mongodb.net/filespin-assessment?retryWrites=true&w=majority";
+mongoose.connect(uri, {
+  useNewUrlParser: true
+}, function (err, db) {
+  if (err) {
+    console.log(err);
+  }
+  else {
+    console.log('Connected to database');
+    mongoose.set('debug', true)
+    // db.close();
+  }
+})
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: "false" }));

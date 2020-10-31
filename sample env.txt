@@ -1,0 +1,6 @@
+MONGO_DB=mongodb://localhost:27017/filespin-assessment
+REACT_APP_AWS_BUCKET_NAME=filespin-assessment
+REACT_APP_AWS_ACCESS_KEY_ID=AKIAJ4WBPAIVQR6NA5DA
+REACT_APP_AWS_SECRET_ACCESS_KEY=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
+REACT_APP_AWS_REGION=ap-south-1
+REACT_APP_UPLOAD_URL=https://s3-ap-south-1:298928243147:accesspoint/filespin-assessment

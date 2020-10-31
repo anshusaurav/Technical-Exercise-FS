@@ -14,6 +14,4 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Example .env file
 
-<img src="example-env-file.png">
-
 ### Helpful Links

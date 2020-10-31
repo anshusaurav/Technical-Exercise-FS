@@ -15,7 +15,7 @@ const endPoint = "http://localhost:8080/api/uploads";
 class Upload extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { progress: 0, status: '', name: '', startTime: '', endTime: '', size: 0 }
+        this.state = { progress: 0, status: '', name: '', startTime: '', endTime: '', size: 0, disabled: false }
         this.fileInput = React.createRef();
     }
 
@@ -29,7 +29,8 @@ class Upload extends React.Component {
         return bucket.upload(params, (err, data) => {
 
             if (err) {
-                toast.error("☣ Error Occured")
+                toast.error("☣ Error Occured");
+                this.setState({ disabled: false })
                 return false;
             }
             this.setState({ endTime: Date.now() }, () => {
@@ -40,7 +41,7 @@ class Upload extends React.Component {
                 axios.post(endPoint, fileObj)
                     .then(response => {
                         this.fileInput.current.value = "";
-                        this.setState({ name: '', status: '', progress: 0, endTime: '', startTime: '' })
+                        this.setState({ name: '', status: '', progress: 0, endTime: '', startTime: '', disabled: false })
                     });
                 return true;
             })
@@ -72,7 +73,7 @@ class Upload extends React.Component {
             displayName: file.name,
             status: 'Uploading..',
         }
-        this.setState({ name: file.name, startTime: fileUpload.timeReference, size: fileUpload.size })
+        this.setState({ name: file.name, startTime: fileUpload.timeReference, size: fileUpload.size, disabled: true })
         this.uploadfile(uniqueFileName, file, folderName)
             .on('httpUploadProgress', (progress) => {
                 let progressPercentage = Math.round(progress.loaded / progress.total * 100);
@@ -90,7 +91,7 @@ class Upload extends React.Component {
 
     };
     render() {
-        const { progress, status, name } = this.state;
+        const { progress, status, name, disabled } = this.state;
         return (
             <div className="flex justify-center align-center h-full w-full bg-teal-lighter">
                 <div className="w-full bg-white rounded h-auto shadow-lg p-8 m-4 md:max-w-sm md:mx-auto">
@@ -101,7 +102,7 @@ class Upload extends React.Component {
                         onSubmit={this.handleClick}>
                         <div className="flex flex-col mb-4 md:w-full">
                             <label className="w-64 flex flex-col self-center items-center px-4 py-6 bg-white text-blue
-                             rounded-lg shadow-lg border border-blue cursor-pointer hover:bg-blue hover:text-gray-600 truncate">
+                             rounded-lg shadow-lg border border-blue cursor-pointer hover:bg-blue  truncate">
                                 <svg className="w-8 h-8" fill="currentColor"
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 20 20">
@@ -112,13 +113,15 @@ class Upload extends React.Component {
                                     Select a file</span>
                                 <input
                                     type='file'
-                                    className="hidden"
+                                    className={`hidden ${disabled ? "cursor-not-allowed" : ""}`}
                                     ref={this.fileInput}
-                                    onChange={this.handleChange} />
+                                    onChange={this.handleChange}
+                                    disabled={disabled}
+                                />
                                 <p>{name}</p>
                             </label>
                         </div>
-                        <button className="block bg-gray-700 hover:bg-teal-dark text-white text-lg mx-auto px-4 py-1 rounded" type="submit">
+                        <button className={`block bg-gray-700 hover:bg-teal-dark text-white text-lg mx-auto px-4 py-1 rounded ${disabled ? "cursor-not-allowed" : ""}`} type="submit" disabled={disabled}>
                             Upload
                         </button>
                     </form>
@@ -138,7 +141,7 @@ class Upload extends React.Component {
                     pauseOnFocusLoss
                     draggable
                     pauseOnHover />
-            </div>
+            </div >
 
         )
     }
