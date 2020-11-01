@@ -17,9 +17,11 @@ mongoose.connect(uri, {
   if (err) {
     console.log(err);
   }
-  else {
     console.log('Connected to database');
     mongoose.set('debug', true);
+    app.use(logger("dev"));
+  
+   
   }
 })
 app.use(express.static("client/build"));
@@ -33,6 +35,19 @@ app.get('/', function (req, res) {
 
 app.use('/api', apiRouter);
 
+if (
+  process.env.NODE_ENV === "production" ||
+  process.env.NODE_ENV === "staging"
+) {
+  app.get("*", (req, res) => {
+    // res.sendFile(path.join(__dirname + "/client/build/index.html"));
+    let url = path.join(__dirname, "../build", "index.html");
+    if (!url.startsWith("/app/"))
+      // we're on local windows
+      url = url.substring(1);
+    res.sendFile(url);
+  });
+}
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   var err = new Error("Not Found");
