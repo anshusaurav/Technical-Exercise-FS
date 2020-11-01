@@ -19,15 +19,19 @@ mongoose.connect(uri, {
   }
   else {
     console.log('Connected to database');
-    mongoose.set('debug', true)
-    // db.close();
+    mongoose.set('debug', true);
   }
 })
 app.use(bodyParser.json());
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: "false" }));
+// app.use(express.static('build'));
 
-app.use(express.static(path.join(__dirname, "build/index.html")));
+app.use(bodyParser.urlencoded({ extended: "false" }));
+app.use(express.static(path.join(__dirname, 'build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler

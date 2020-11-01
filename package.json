@@ -41,7 +41,8 @@
         "eject": "react-scripts eject",
         "dev": "concurrently \"react-scripts start\" \"nodemon ./bin/www\""
     },
-    "proxy": "http://localhost:8080",
+    "homepage": "http://https://fs-assessment.herokuapp.com/",
+    "proxy": "http://localhost:5000",
     "eslintConfig": {
         "extends": "react-app"
     },

@@ -10,7 +10,7 @@ const bucket = new AWS.S3({
     region: process.env.REACT_APP_AWS_REGION
 });
 
-const endPoint = "http://localhost:8080/api/uploads";
+const endPoint = "/api/uploads";
 
 class Upload extends React.Component {
     constructor(props) {
