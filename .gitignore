@@ -53,6 +53,8 @@ nbproject
 *.sublime-workspace
 .idea
 
+Procfile
+
 # Komodo
 *.komodoproject
 .komodotools
