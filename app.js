@@ -17,13 +17,13 @@ mongoose.connect(uri, {
   if (err) {
     console.log(err);
   }
-    console.log('Connected to database');
-    mongoose.set('debug', true);
-    app.use(logger("dev"));
-  
-   
-  }
-})
+  console.log('Connected to database');
+  mongoose.set('debug', true);
+  // app.use(logger("dev"));
+
+
+}
+)
 app.use(express.static("build"));
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: "false" }));
