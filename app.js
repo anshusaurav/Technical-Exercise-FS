@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const path = require("path");
+require('dotenv').config();
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const apiRouter = require('./routes/api')
@@ -10,7 +11,7 @@ const mongoose = require('mongoose');
 app.use(cors());
 
 // config.connectDB();
-const uri = "mongodb+srv://anshusaurav:abcd1234@cluster0.eawse.mongodb.net/filespin-assessment?retryWrites=true&w=majority";
+const uri = process.env.MONGO_DB;
 mongoose.connect(uri, {
   useNewUrlParser: true
 }, function (err, db) {
