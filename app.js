@@ -6,7 +6,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const apiRouter = require('./routes/api')
 const app = express();
-// const config = require("./config/config");
 const mongoose = require('mongoose');
 app.use(cors());
 
@@ -23,16 +22,15 @@ mongoose.connect(uri, {
     mongoose.set('debug', true);
   }
 })
-app.use(bodyParser.json());
+app.use(express.static("client/build"));
 app.use(express.json());
-// app.use(express.static('build'));
-
 app.use(bodyParser.urlencoded({ extended: "false" }));
 app.use(express.static(path.join(__dirname, 'build')));
 
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
 app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
